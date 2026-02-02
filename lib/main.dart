@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
 
           children: [
             Row(
@@ -46,7 +46,9 @@ class _MyAppState extends State<MyApp> {
                 itemCount: todos.length,
                 prototypeItem: ListTile(title: Text(todos.first)),
                 itemBuilder: (context, index) {
-                  return ListTile(title: Text(todos[index]));
+                  return ListTile(
+                    title: Text(textAlign: TextAlign.center, todos[index]),
+                  );
                 },
               ),
             ),
