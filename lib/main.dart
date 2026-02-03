@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(title: Text("Todo"), backgroundColor: Colors.blue),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
 
@@ -50,6 +51,12 @@ class _MyAppState extends State<MyApp> {
                     title: Text(textAlign: TextAlign.center, todos[index]),
                   );
                 },
+              ),
+            ),
+            BottomAppBar(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [Icon(Icons.task), Icon(Icons.add_task)],
               ),
             ),
           ],
