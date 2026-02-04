@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 150,
+                  width: 300,
                   child: TextField(controller: myController),
                 ),
                 IconButton.filled(onPressed: addtask, icon: Icon(Icons.send)),
@@ -66,10 +66,12 @@ class _MyAppState extends State<MyApp> {
                   IconButton(
                     onPressed: () => print("add tasks"),
                     icon: Icon(Icons.add_task_outlined),
+                    tooltip: "add tasks",
                   ),
                   IconButton(
                     onPressed: () => print("Complete Tasks"),
                     icon: Icon(Icons.check_circle_outline),
+                    tooltip: "finised tasks",
                   ),
                 ],
               ),
