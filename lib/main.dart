@@ -1,7 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
+  sqfliteFfiInit();
+
+  databaseFactory = databaseFactoryFfi;
+  var db = await openDatabase('tasks.db');
   runApp(MyApp());
+}
+
+void saveData() async {
+  await openDatabase('tasks.db');
+  var databasesPath = await getDatabasesPath();
+  String path = join(databasesPath, 'tasks.db');
+  Database database = await openDatabase(
+    path,
+    version: 1,
+    onCreate: (Database db, int version) async {
+      // When creating the db, create the table
+      await db.execute(
+        'CREATE TABLE tasks (id INTEGER PRIMARY KEY, title TEXT)',
+      );
+    },
+  );
+  await database.transaction((txn) async {
+    int id1 = await txn.rawInsert(
+      'INSERT INTO tasks(name, value, num) VALUES("buy milk")',
+    );
+    print('inserted1: $id1');
+  });
+
+  List<Map> list = await database.rawQuery('SELECT * FROM tasks');
+  print(list);
 }
 
 class MyApp extends StatefulWidget {
@@ -39,10 +71,10 @@ class _MyAppState extends State<MyApp> {
                   width: 300,
                   child: TextField(controller: myController),
                 ),
-                IconButton.filled(onPressed: addtask, icon: Icon(Icons.send)),
+                IconButton.filled(onPressed: saveData, icon: Icon(Icons.send)),
               ],
             ),
-            todos.length > 0
+            todos.isNotEmpty
                 ? Expanded(
                     child: ListView.builder(
                       itemCount: todos.length,
